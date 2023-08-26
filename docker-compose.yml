@@ -1,0 +1,36 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./services/backend
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/backend_db
+    depends_on:
+      - postgres
+  
+  #frontend:
+  #  build:
+  #    context: ./services/frontend
+  #  ports:
+  #    - "3000:80"
+
+  #recommendation:
+  #  build:
+   #   context: ./services/recommendation
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres_init.sql:/docker-entrypoint-initdb.d/postgres_init.sql
+      - ./data/clean_shoe_metadata.csv:/clean_shoe_metadata.csv
+      - ./data/shoe_tokens.csv:/shoe_tokens.csv
+
+
