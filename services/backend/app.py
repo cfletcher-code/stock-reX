@@ -1,5 +1,7 @@
 from flask import Flask, send_from_directory, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import load_only
+from sqlalchemy.sql import func
 import os
 
 app = Flask(__name__)
@@ -36,48 +38,48 @@ class ShoeMetadata(db.Model):
     currency = db.Column(db.String(255))
     png_path = db.Column(db.String(255))
 
-   
-@app.route("/images/<filename>")
-def serve_image(filename):
-    return send_from_directory('data/shoe_pngs',filename)
-
-@app.route('/shoemetadata/get_metadata', methods=['GET'])
-def get_metadata():
-    metadata_list = ShoeMetadata.query.all()
-    metadata_data = [{
+def get_key_metadata(item):
+    return {
         'id': item.id,
         'title': item.title,
         'colorway': item.colorway,
         'releaseDate': str(item.releaseDate),
         'retailPrice': str(item.retailPrice),
-        'brand': item.brand,
-        'model': item.model,
-        'lowestAsk': item.lowestAsk,
-        'numberOfAsks': item.numberOfAsks,
-        'highestBid': item.highestBid,
-        'numberOfBids': item.numberOfBids,
-        'annualHigh': item.annualHigh,
-        'annualLow': item.annualLow,
-        'volatility': str(item.volatility),
-        'pricePremium': str(item.pricePremium),
-        'lastSale': item.lastSale,
-        'changeValue': item.changeValue,
-        'changePercentage': str(item.changePercentage),
-        'salesLast72Hours': item.salesLast72Hours,
-        'sku': item.sku,
-        'currency': item.currency,
         'png_path': item.png_path
-    } for item in metadata_list]
+    }
 
-    return jsonify(metadata_data), 200
+@app.route("/images/<filename>")
+def serve_image(filename):
+    return send_from_directory('data/shoe_pngs',filename)
 
-@app.route('/feedback/add_feedback',methods=['POST'])
-def add_feedback():
+@app.route('/shoemetadata/get_metadata/<id>', methods=['GET'])
+def get_metadata(id):
+    item = ShoeMetadata.query.filter_by(id=id).first()
+    return jsonify(get_key_metadata(item)), 200
+
+@app.route('/recommendation/<user_id>/<k>',methods=['GET'])
+def get_recommendation(user_id,k):
+    random_items = ShoeMetadata.query.order_by(func.random()).limit(k).all()
+    return jsonify([get_key_metadata(item) for item in random_items]), 200
+
+@app.route('/feedback/get_unseen_shoe/<user_id>', methods=['GET'])
+def get_unseen_shoe(user_id):
+    seen_shoes = Feedback.query.filter_by(user_id=user_id)
+    seen_shoes_ids = [shoe.product_id for shoe in seen_shoes]
+    print(seen_shoes_ids)
+    random_item = ShoeMetadata.query.filter(ShoeMetadata.id.in_(seen_shoes_ids)).order_by(func.random()).first()
+    return jsonify(get_key_metadata(random_item)), 200
+
+@app.route('/feedback/add_feedback/<user_id>/<product_id>',methods=['POST'])
+def add_feedback(user_id, product_id):
     data = request.get_json()
+    data['user_id'] = user_id
+    data['product_id'] = product_id
+    
     new_feedback = Feedback(**data)
     db.session.add(new_feedback)
     db.session.commit()
-    return jsonify({'message':'Feedback added successfully'}), 201
+    return jsonify({'message': 'Feedback added successfully'}), 201
 
 @app.route('/feedback/get_feedback',methods=['GET'])
 def get_feedback():
