@@ -9,12 +9,19 @@ services:
       DATABASE_URL: postgresql://postgres:password@postgres:5432/backend_db
     depends_on:
       - postgres
+    networks:
+      - stock-rex-network
   
-  #frontend:
-  #  build:
-  #    context: ./services/frontend
-  #  ports:
-  #    - "3000:80"
+  frontend:
+    build:
+      context: ./services/frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - stock-rex-network
+
 
   #recommendation:
   #  build:
@@ -32,5 +39,9 @@ services:
       - ./postgres_init.sql:/docker-entrypoint-initdb.d/postgres_init.sql
       - ./data/clean_shoe_metadata.csv:/clean_shoe_metadata.csv
       - ./data/shoe_tokens.csv:/shoe_tokens.csv
+
+networks:
+  stock-rex-network:
+    driver: bridge
 
 
