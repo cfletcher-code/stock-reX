@@ -1,32 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
-import LoginPage from './components/LoginPage';
-import Dashboard from './components/Dashboard';
-import React, {useState} from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './Navbar';
+import Feedback from './Feedback';
+import Recommendation from './Recommendation';
+import { UserProvider } from './UserContext';
 
 function App() {
-  const [loggedIn,setLoggedIn] = useState(false);
-  const [user,setUser] = useState(null);
-
-  const handleLogin = (user_id) => {
-    setUser(user_id);
-    setLoggedIn(true);
-    
-  };
-
-  const handleLogout = () => {
-    setLoggedIn(false);
-    setUser(null);
-  };
-
   return (
-    <div className="App">
-      {loggedIn ? (
-        <Dashboard user_id={user} onLogout={handleLogout} />
-      ) : (
-        <LoginPage onLogin={handleLogin} />
-      )}
-    </div>
+    <Router>
+      <UserProvider>
+        <Navbar />
+        <Routes>
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/recommendation" element={<Recommendation />} />
+        </Routes>
+      </UserProvider>
+    </Router>
   );
 }
 
