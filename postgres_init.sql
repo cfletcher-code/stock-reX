@@ -5,7 +5,7 @@ CREATE DATABASE backend_db;
 CREATE TABLE IF NOT EXISTS feedback (
     id SERIAL PRIMARY KEY,
     user_id INT,
-    product_id VARCHAR(255),
+    product_id INT,
     feedback_value INT
 );
 

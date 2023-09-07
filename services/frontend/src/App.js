@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import Feedback from './Feedback';
 import Recommendation from './Recommendation';
 import { UserProvider } from './UserContext';
+import './styles.css';
 
 function App() {
   return (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useUser } from './UserContext';
+import RecommendationCard from './RecommendationCard'; 
 
 function Recommendation() {
   const { user_id } = useUser();
@@ -14,7 +15,7 @@ function Recommendation() {
 
   const fetchRecommendations = () => {
     axios
-      .get(`http://localhost:8080/recommendation/3`) // Assuming you want the top 3 recommendations
+      .get(`http://localhost:8080/recommendation/${user_id}/3`) // Assuming you want the top 3 recommendations
       .then((response) => {
         setRecommendations(response.data); // Update recommendations based on API response
       })
@@ -23,23 +24,21 @@ function Recommendation() {
       });
   };
 
-  return (
-    <div className="recommendations-container">
-      <h2>Top Recommendations</h2>
-      <ul>
-        {recommendations.map((recommendation) => (
-          <li key={recommendation.id}>
-            <div className="recommendation-info">
-              <img src={recommendation.imageUrl} alt={recommendation.name} />
-              <p>Name: {recommendation.name}</p>
-              <p>Description: {recommendation.description}</p>
-              {/* Add more metadata fields as needed */}
-            </div>
-          </li>
-        ))}
-      </ul>
+  // Recommendation.js
+
+// ...
+
+return (
+  <div className="recommendations-container">
+    <h2 className="centered-heading">Top Recommendations</h2>
+    <div className="recommendation-list">
+      {recommendations.map((recommendation, index) => (
+        <RecommendationCard key={recommendation.id} rank={index + 1} shoe={recommendation} />
+      ))}
     </div>
-  );
+  </div>
+);
+
 }
 
 export default Recommendation;

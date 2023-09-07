@@ -1,0 +1,212 @@
+/* styles.css */
+
+:root {
+    --brand-color: #40af49;
+    --text-color: #212121;
+  }
+  
+body {
+color: var(--text-color);
+}
+
+.navbar {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center horizontally */
+    background-color: white;
+    color: var(--brand-color);
+    padding: 10px 0;
+    border-radius: 0;
+    width: 100%;
+  }
+  
+  .logo-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center horizontally */
+    background-color: white;
+    padding: 10px;
+  }
+  
+  .tabs {
+    background-color: var(--brand-color);
+    color: white;
+    border-radius: 0; /* Remove rounded corners */
+    padding: 10px 0;
+    width: 100%; /* Make the tabs span across the page */
+    text-align: center;
+  }
+  
+  .logo {
+    max-width: 300px;
+  }
+  
+  .login-container input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 5px;
+  }
+
+  .login-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center horizontally */
+    background-color: white;
+    padding: 10px; /* Add padding to all sides */
+    padding-bottom: 20px; /* Add additional padding to the bottom */
+  }
+
+  .login-container span {
+    padding-bottom: 10px; /* Add padding underneath the "User: {user_id}" text */
+  }
+  
+  .login-container button {
+    padding: 10px 20px;
+    background-color: var(--brand-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .login-container button:hover {
+    background-color: white;
+    color: var(--brand-color);
+  }
+  
+  .tabs ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .tabs li {
+    margin: 0 20px;
+  }
+  
+  .tabs a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+    padding: 10px 20px;
+  }
+  
+  .tabs a:hover {
+    color: #ddd;
+  }
+
+.rating {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Add some spacing */
+  }
+  
+  .rating button {
+    padding: 12px 24px;
+    background-color: var(--brand-color);
+    color: white;
+    border: none;
+    margin: 0 5px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .rating button:hover {
+    background-color: white; /* Change background color on hover */
+    color: var(--brand-color); /* Change text color on hover */
+  }
+  
+
+  .rating button {
+    padding: 12px 24px;
+    background-color: var(--brand-color);
+    color: white;
+    border: none;
+    margin: 0 5px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .recommendation-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center-align the cards */
+    max-width: 2000px; /* Set a maximum container width */
+    margin: 0 auto; /* Center the container horizontally */
+  }
+  
+  .recommendation-card {
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .recommendation-card img {
+    max-width: 100%;
+  }
+  
+  .rank {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .details {
+    margin-top: 10px;
+  }
+  
+  .shoe-card-wrapper {
+    display: flex;
+    justify-content: center; /* Center the card horizontally */
+    max-width: 700px; /* Set a fixed width for the card */
+    margin: 20px auto; /* Center the card horizontally */
+  }
+  
+  .shoe-card {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid #ddd;
+    width: 800px;
+    max-height: 300px;
+    overflow: hidden;
+  }
+  
+  .shoe-card img {
+    max-width: 350px;
+    margin-right: 20px;
+  }
+
+  .centered-heading {
+    text-align: center; /* Center-align the heading */
+  }
+
+  .skip-button {
+    padding: 10px 20px;
+    background-color: #ddd;
+    color: var(--text-color);
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    display: block; /* Set the display to block to center the button */
+    margin: 0 auto; /* Center horizontally */
+    margin-top: 10px; /* Add padding to the top */
+    width: 200px;
+  }
+  
+  .skip-button:hover {
+    background-color: var(--brand-color); /* Change background color on hover */
+    color: white; /* Change text color on hover */
+  }
